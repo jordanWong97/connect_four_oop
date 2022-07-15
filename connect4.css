@@ -32,3 +32,8 @@
 #column-top td:hover {
   background-color: gold;
 }
+
+.limit{
+  cursor: default;
+  pointer-events: none;
+}

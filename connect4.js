@@ -1,14 +1,21 @@
 "use strict";
 
 
+class Player {
+  constructor(color){
+    this.color = color;
+  }
+}
+
 class Game {
-  constructor(height = 6, width = 7){
+  constructor(p1, p2, height = 6, width = 7){
+    this.players = [p1,p2];
     this.height = height;
     this.width = width;
     this.board = [];
     this.makeBoard();
     this.makeHtmlBoard();
-    this.currPlayer = 1;
+    this.currPlayer = p1;
   }
 
   makeBoard() {
@@ -64,7 +71,7 @@ findSpotForCol(x) {
 placeInTable(y, x) {
   const piece = document.createElement('div');
   piece.classList.add('piece');
-  piece.classList.add(`p${this.currPlayer}`);
+  piece.style.backgroundColor = this.currPlayer.color;
   piece.style.top = -50 * (y + 2);
 
   const spot = document.getElementById(`${y}-${x}`);
@@ -75,6 +82,7 @@ placeInTable(y, x) {
 
 endGame(msg) {
   alert(msg);
+  document.classList.add('limit');
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -104,7 +112,9 @@ handleClick(evt) {
   }
 
   // switch players
-  this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+  this.currPlayer =
+      this.currPlayer === this.players[0] ? this.players[1] : this.players[0];
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -153,9 +163,14 @@ function createButton() {
   board.append(button)
 
   button.addEventListener('click', () => {
-    let clearBoard = document.getElementById("board")
-    clearBoard.innerHTML = ""
-    new Game()})
+    let clearBoard = document.getElementById("board");
+    clearBoard.innerHTML = "";
+    const p1 = new Player(document.getElementById('p1').value);
+    const p2 = new Player(document.getElementById('p2').value);
+    new Game(p1,p2);
+  })
 }
 
-createButton()
+
+
+createButton();
