@@ -2,7 +2,7 @@
 
 
 class Game {
-  constructor(height, width){
+  constructor(height = 6, width = 7){
     this.height = height;
     this.width = width;
     this.board = [];
@@ -146,4 +146,16 @@ handleClick(evt) {
   }
 }
 
-let game1 = new Game(6, 7)
+function createButton() {
+  const board = document.getElementById("game");
+  const button = document.createElement("button");
+  button.innerHTML = "start";
+  board.append(button)
+
+  button.addEventListener('click', () => {
+    let clearBoard = document.getElementById("board")
+    clearBoard.innerHTML = ""
+    new Game()})
+}
+
+createButton()
